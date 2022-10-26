@@ -1,3 +1,4 @@
+from operator import index
 import tkinter as tk
 import sqlite3
 import pandas as pd
@@ -24,29 +25,33 @@ import pandas as pd
 # conexao.close()
 
 def cadastrar_clientes():
-    conexao = sqlite3.connect('clientes_cadastro.db')
-    c = conexao.cursor()
+    try:
+        conexao = sqlite3.connect('clientes_cadastro.db')
+        c = conexao.cursor()
 
-    # Inserir dados na tabela DB:
-    c.execute(" INSERT INTO clientes VALUES (:nome, :sobrenome, :email, :telefone)",
-              {
-                  'nome': entry_nome.get(),
-                  'sobrenome': entry_sobrenome.get(),
-                  'email': entry_email.get(),
-                  'telefone': entry_telefone.get()
-              }
-              )
+        # Inserir dados na tabela DB:
+        c.execute(" INSERT INTO clientes VALUES (:nome, :sobrenome, :email, :telefone)",
+                      {
+                          'nome': entry_nome.get(),
+                          'sobrenome': entry_sobrenome.get(),
+                          'email': entry_email.get(),
+                          'telefone': entry_telefone.get()
+                      }
+                      )
 
-    conexao.commit()
+        conexao.commit()
 
-    conexao.close()
+        conexao.close()
 
-    # Apagar os valores das caixas de entrada:
-    entry_nome.delete(0, 'end')
-    entry_sobrenome.delete(0, 'end')
-    entry_email.delete(0, 'end')
-    entry_telefone.delete(0, 'end')
-
+        # Apagar os valores das caixas de entrada:
+        entry_nome.delete(0, 'end')
+        entry_sobrenome.delete(0, 'end')
+        entry_email.delete(0, 'end')
+        entry_telefone.delete(0, 'end')
+        print('Cadastrado com sucesso!')
+    except:
+        print('Ocorreu algum erro. Tente Novamente!')
+    
 
 def exportar_clientes():
     conexao = sqlite3.connect('clientes_cadastro.db')
@@ -66,6 +71,25 @@ def exportar_clientes():
 
     conexao.close()
 
+def deletar_clientes():
+    try:
+        conexao = sqlite3.connect('clientes_cadastro.db')
+
+        #Criação do cursor:
+        c = conexao.cursor()
+
+        #Criação da tabela no DB:
+        c.execute('DELETE FROM clientes')
+
+        #Commit as mudanças:
+        conexao.commit()
+
+        #Fechar DB
+        conexao.close()
+        print('Dados de cadastros deletados')
+    except:
+        print('Ocorreu algum erro. Tente Novamente!')
+    
 # Criação da janela:
 
 janela = tk.Tk()
@@ -108,6 +132,11 @@ botao_cadastrar.grid(row=4, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
 # Exportar
 entry_expotar = tk.Button(janela, text='Ver informações', command=exportar_clientes)
 entry_expotar.grid(row=5, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
+
+# Deletar
+entry_deletar = tk.Button(janela, text='Deletar informações', command=deletar_clientes)
+entry_deletar.grid(row=6, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
+
 
 janela.mainloop()
 
