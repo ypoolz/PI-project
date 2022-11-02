@@ -1,28 +1,28 @@
-from operator import index
 import tkinter as tk
 import sqlite3
 import pandas as pd
 
 # #Criando DB:
-# conexao = sqlite3.connect('clientes_cadastro.db')
+conexao = sqlite3.connect('clientes_cadastro.db')
 
 # #Criação do cursor:
-# c = conexao.cursor()
+c = conexao.cursor()
 
 # #Criação da tabela no DB:
-# c.execute(''' CREATE TABLE clientes (
-#   nome text,
-#   sobrenome text,
-#   email text,
-#   telefone text
-#    )
-# ''')
+
+c.execute(''' CREATE TABLE IF NOT EXISTS clientes( 
+       nome char,
+       sobrenome char,
+       email char,
+       telefone char
+        )
+        ''')
 
 # #Commit as mudanças:
-# conexao.commit()
+conexao.commit()
 
 # #Fechar DB
-# conexao.close()
+conexao.close()
 
 def cadastrar_clientes():
     try:
@@ -64,8 +64,10 @@ def exportar_clientes():
     # Criar arquivo de planilha do excel:
     clientes_cadastrados = pd.DataFrame(clientes_cadastrados, 
                                         columns=['Nome', 'Sobrenome', 'E-mail', 'Telefone', 'Id'])
+    
     print(clientes_cadastrados)
-    # clientes_cadastrados.to_csv('clientes_cadastro.csv') 
+    
+    clientes_cadastrados.to_csv('clientes_cadastro.csv') 
     
     conexao.commit()
 
