@@ -58,6 +58,8 @@ def menu_clientes():
 
     entry_telefone = tk.Entry(janela, width=30)
     entry_telefone.grid(row=3, column=1, padx=10, pady=10)
+    
+    # Funções na janela de cadastro:
 
     def cadastrar_clientes():
         try:
@@ -88,28 +90,34 @@ def menu_clientes():
             print('Ocorreu algum erro. Tente Novamente!')
 
     def exportar_clientes():
-        conexao = sqlite3.connect('DBdoAPP.db')
-        c = conexao.cursor()
+        try:
+            conexao = sqlite3.connect('DBdoAPP.db')
+            c = conexao.cursor()
 
-        # Inserir dados na tabela:
-        c.execute(" SELECT *, oid FROM clientes")
-        clientes_cadastrados = c.fetchall()
+            # Inserir dados na tabela:
+            c.execute(" SELECT *, oid FROM clientes")
+            clientes_cadastrados = c.fetchall()
 
-        # Criar arquivo de planilha do excel:
-        clientes_cadastrados = pd.DataFrame(clientes_cadastrados,
-                                            columns=['Nome', 'Sobrenome', 'E-mail', 'Telefone', 'Id'])
+            # Criar estrutura de dados para ser vizualizado no terminal:
+            clientes_cadastrados = pd.DataFrame(clientes_cadastrados,
+                                                columns=['Nome', 'Sobrenome', 'E-mail', 'Telefone', 'Id'])
 
-        print(clientes_cadastrados)
+            print(clientes_cadastrados)
 
-        clientes_cadastrados.to_csv('clientes_cadastro.csv')
+            # Criar arquivo com dados em csv
+            clientes_cadastrados.to_csv('clientes_cadastro.csv')
 
-        conexao.commit()
+            conexao.commit()
 
-        conexao.close()
+            conexao.close()
+            
+            print('Consulta Realizada')
+        except:
+            print('Erro ao consultar informações')
 
     def deletar_clientes():
         try:
-            conexao = sqlite3.connect('clientes_cadastro.db')
+            conexao = sqlite3.connect('DBdoAPP.db')
 
             # Criação do cursor:
             c = conexao.cursor()
@@ -122,9 +130,10 @@ def menu_clientes():
 
             # Fechar DB
             conexao.close()
-            print('Dados de cadastros deletados')
+            print('Dados deletados com sucesso')
         except:
             print('Ocorreu algum erro. Tente Novamente!')
+
 
     # Botões
 
@@ -133,7 +142,7 @@ def menu_clientes():
     botao_cadastrar.grid(row=4, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
 
     # Exportar
-    entry_expotar = tk.Button(janela, text='Ver informações', command=exportar_clientes)
+    entry_expotar = tk.Button(janela, text='Consultar informações', command=exportar_clientes)
     entry_expotar.grid(row=5, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
 
     # Deletar
@@ -198,9 +207,12 @@ def menu_restaurantes():
 
     entry_telefone = tk.Entry(janela, width=30)
     entry_telefone.grid(row=3, column=1, padx=10, pady=10)
+    
+    # Funções na janela de cadastro:
 
     def cadastrar_restaurente():
         try:
+            # Conexão com DB
             conexao = sqlite3.connect('DBdoAPP.db')
             c = conexao.cursor()
 
@@ -228,33 +240,38 @@ def menu_restaurantes():
             print('Ocorreu algum erro. Tente Novamente!')
 
     def exportar_restaurante():
-        conexao = sqlite3.connect('DBdoAPP.db')
-        c = conexao.cursor()
+        try:
+            conexao = sqlite3.connect('DBdoAPP.db')
+            c = conexao.cursor()
 
-        # Inserir dados na tabela:
-        c.execute(" SELECT *, oid FROM restaurantes")
-        clientes_cadastrados = c.fetchall()
+            # Inserir dados na tabela:
+            c.execute(" SELECT *, oid FROM restaurantes")
+            restaurantes_cadastrados = c.fetchall()
 
-        # Criar arquivo de planilha do excel:
-        clientes_cadastrados = pd.DataFrame(clientes_cadastrados,
-                                            columns=['Nome', 'CNPJ', 'E-mail', 'Telefone', 'Id'])
+            # Criar estrutura de dados para ser vizualizado no terminal:
+            restaurantes_cadastrados = pd.DataFrame(restaurantes_cadastrados,
+                                                columns=['Nome', 'CNPJ', 'E-mail', 'Telefone', 'Id'])
 
-        print(clientes_cadastrados)
+            print(restaurantes_cadastrados)
 
-        clientes_cadastrados.to_csv('clientes_cadastro.csv')
+            # Criar arquivos com dados em csv
+            restaurantes_cadastrados.to_csv('restaurantes_cadastrados.csv')
 
-        conexao.commit()
+            conexao.commit()
 
-        conexao.close()
-
+            conexao.close()
+            print('Consulta Realizada')
+        except:
+            print('Erro ao consultar informações')
+        
     def deletar_restaurante():
         try:
-            conexao = sqlite3.connect('clientes_cadastro.db')
+            conexao = sqlite3.connect('DBdoAPP.db')
 
             # Criação do cursor:
             c = conexao.cursor()
 
-            # Criação da tabela no DB:
+            # Deletar informações no DB:
             c.execute('DELETE FROM clientes')
 
             # Commit as mudanças:
@@ -262,7 +279,7 @@ def menu_restaurantes():
 
             # Fechar DB
             conexao.close()
-            print('Dados de cadastros deletados')
+            print('Dados deletados com sucesso')
         except:
             print('Ocorreu algum erro. Tente Novamente!')
 
@@ -338,10 +355,12 @@ def menu_entregador():
 
     entry_telefone = tk.Entry(janela, width=30)
     entry_telefone.grid(row=3, column=1, padx=10, pady=10)
+    
+    # Funções na janela de cadastro:
 
     def cadastrar_entregadores():
         try:
-            conexao = sqlite3.connect('clientes_cadastro.db')
+            conexao = sqlite3.connect('DBdoAPP.db')
             c = conexao.cursor()
 
             # Inserir dados na tabela DB:
@@ -368,25 +387,31 @@ def menu_entregador():
             print('Ocorreu algum erro. Tente Novamente!')
 
     def exportar_entregadores():
-        conexao = sqlite3.connect('DBdoAPP.db')
-        c = conexao.cursor()
+        try:
+            conexao = sqlite3.connect('DBdoAPP.db')
+            c = conexao.cursor()
 
-        # Inserir dados na tabela:
-        c.execute(" SELECT *, oid FROM entregadores")
-        cadastro_entregadores = c.fetchall()
+            # Selecionar dados na tabela:
+            c.execute(" SELECT *, oid FROM entregadores")
+            cadastro_entregadores = c.fetchall()
 
-        # Criar arquivo de planilha do excel:
-        cadastro_entregadores = pd.DataFrame(cadastro_entregadores,
-                                             columns=['Nome', 'CPF', 'E-mail', 'Telefone', 'Id'])
+            # Criar estrutura de dados para ser vizualizado no terminal:
+            cadastro_entregadores = pd.DataFrame(cadastro_entregadores,
+                                                columns=['Nome' , 'CPF', 'E-mail', 'Telefone', 'Id'])
 
-        print(cadastro_entregadores)
+            print(cadastro_entregadores)
 
-        cadastro_entregadores.to_csv('entregadores_cadastrados.csv')
+            # Criação de arquivo csv com dados 
+            cadastro_entregadores.to_csv('entregadores_cadastrados.csv')
 
-        conexao.commit()
+            conexao.commit()
 
-        conexao.close()
-
+            conexao.close()
+            
+            print('Consulta Realizada')
+        except:
+            print('Erro ao consultar informações')    
+            
     def deletar_entregadores():
         try:
             conexao = sqlite3.connect('DBdoAPP.db')
@@ -394,7 +419,7 @@ def menu_entregador():
             # Criação do cursor:
             c = conexao.cursor()
 
-            # Criação da tabela no DB:
+            # Deletando informações no DB:
             c.execute('DELETE FROM entregadores')
 
             # Commit as mudanças:
@@ -402,7 +427,7 @@ def menu_entregador():
 
             # Fechar DB
             conexao.close()
-            print('Dados de cadastros deletados')
+            print('Dados deletados com sucesso!')
         except:
             print('Ocorreu algum erro. Tente Novamente!')
 
@@ -422,21 +447,24 @@ def menu_entregador():
 
     janela.mainloop()
 
+
 # ===============MENU============ #
+
+# Criação de janela
 
 janela = tk.Tk()
 janela.title('Como deseja se cadastrar: ')
 
-    #
+# Cadastro de Clientes
 botao_menuclientes = tk.Button(janela, text='Cliente', command=menu_clientes)
 botao_menuclientes.grid(row=0, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
 
-    #
+# Cadastro de Restaurantes
 botao_menuresturante = tk.Button(janela, text='Restaurante', command=menu_restaurantes)
-botao_menuresturante.grid(row=0, column=1, padx=10, pady=10, columnspan=1, ipadx=100)
+botao_menuresturante.grid(row=1, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
 
-    #
+# Cadastro de Entregador
 botao_menuentregador = tk.Button(janela, text='Entregador', command=menu_entregador)
-botao_menuentregador.grid(row=0, column=2, padx=10, pady=10, columnspan=1, ipadx=100)
+botao_menuentregador.grid(row=2, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
 
 janela.mainloop()
