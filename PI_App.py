@@ -422,21 +422,21 @@ def menu_entregador():
 
     janela.mainloop()
 
-    # ===============MENU============ #
+# ===============MENU============ #
 
-    janela = tk.Tk()
-    janela.title('Como deseja se cadastrar: ')
-
-    #
-    botao_menuclientes = tk.Button(janela, text='Cliente', command=menu_clientes)
-    botao_menuclientes.grid(row=0, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
+janela = tk.Tk()
+janela.title('Como deseja se cadastrar: ')
 
     #
-    botao_menuresturante = tk.Button(janela, text='Restaurante', command=menu_restaurantes)
-    botao_menuresturante.grid(row=0, column=1, padx=10, pady=10, columnspan=1, ipadx=100)
+botao_menuclientes = tk.Button(janela, text='Cliente', command=menu_clientes)
+botao_menuclientes.grid(row=0, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
 
     #
-    botao_menuentregador = tk.Button(janela, text='Entregador', command=menu_entregador)
-    botao_menuentregador.grid(row=0, column=2, padx=10, pady=10, columnspan=1, ipadx=100)
+botao_menuresturante = tk.Button(janela, text='Restaurante', command=menu_restaurantes)
+botao_menuresturante.grid(row=0, column=1, padx=10, pady=10, columnspan=1, ipadx=100)
 
-    janela.mainloop()
+    #
+botao_menuentregador = tk.Button(janela, text='Entregador', command=menu_entregador)
+botao_menuentregador.grid(row=0, column=2, padx=10, pady=10, columnspan=1, ipadx=100)
+
+janela.mainloop()
