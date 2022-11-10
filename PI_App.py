@@ -2,15 +2,14 @@ import tkinter as tk
 import sqlite3
 import pandas as pd
 
-
 def menu_clientes():
-    # #Criando DB:
+    # Criando DB:
     conexao = sqlite3.connect('DBdoAPP.db')
 
-    # #Criação do cursor:
+    # Criação do cursor:
     c = conexao.cursor()
 
-    # #Criação da tabela no DB:
+    # Criação da tabela no DB:
 
     c.execute(''' CREATE TABLE IF NOT EXISTS clientes(
            nome char,
@@ -20,10 +19,10 @@ def menu_clientes():
             )
             ''')
 
-    # #Commit as mudanças:
+    # Commit as mudanças:
     conexao.commit()
 
-    # #Fechar DB
+    # Fechar DB
     conexao.close()
 
     # Criação da janela:
@@ -134,7 +133,6 @@ def menu_clientes():
         except:
             print('Ocorreu algum erro. Tente Novamente!')
 
-
     # Botões
 
     # Cadastrar:
@@ -151,16 +149,14 @@ def menu_clientes():
 
     janela.mainloop()
 
-
 def menu_restaurantes():
-    # #Criando DB:
+    # Criando DB:
     conexao = sqlite3.connect('DBdoAPP.db')
 
-    # #Criação do cursor:
+    # Criação do cursor:
     c = conexao.cursor()
 
-    # #Criação da tabela no DB:
-
+    # Criação da tabela no DB:
     c.execute(''' CREATE TABLE IF NOT EXISTS restaurantes(
            Nome char,
            CNPJ char,
@@ -169,10 +165,10 @@ def menu_restaurantes():
             )
             ''')
 
-    # #Commit as mudanças:
+    # Commit as mudanças:
     conexao.commit()
 
-    # #Fechar DB
+    # Fechar DB
     conexao.close()
 
     # Criação da janela:
@@ -244,7 +240,7 @@ def menu_restaurantes():
             conexao = sqlite3.connect('DBdoAPP.db')
             c = conexao.cursor()
 
-            # Inserir dados na tabela:
+            # Selecionar dados na tabela:
             c.execute(" SELECT *, oid FROM restaurantes")
             restaurantes_cadastrados = c.fetchall()
 
@@ -272,7 +268,7 @@ def menu_restaurantes():
             c = conexao.cursor()
 
             # Deletar informações no DB:
-            c.execute('DELETE FROM clientes')
+            c.execute('DELETE FROM restaurantes')
 
             # Commit as mudanças:
             conexao.commit()
@@ -298,7 +294,6 @@ def menu_restaurantes():
     entry_deletar.grid(row=6, column=0, padx=10, pady=10, columnspan=2, ipadx=80)
 
     janela.mainloop()
-
 
 def menu_entregador():
     # #Criando DB:
@@ -431,6 +426,8 @@ def menu_entregador():
         except:
             print('Ocorreu algum erro. Tente Novamente!')
 
+    
+    
     # Botões
 
     # Cadastrar:
@@ -447,14 +444,15 @@ def menu_entregador():
 
     janela.mainloop()
 
-
-# ===============MENU============ #
+#============== MENU ============#
 
 # Criação de janela
 
 janela = tk.Tk()
 janela.title('Como deseja se cadastrar: ')
 
+
+#========= BOTÕES ========#
 # Cadastro de Clientes
 botao_menuclientes = tk.Button(janela, text='Cliente', command=menu_clientes)
 botao_menuclientes.grid(row=0, column=0, padx=10, pady=10, columnspan=1, ipadx=100)
